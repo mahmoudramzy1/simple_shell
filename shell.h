@@ -10,5 +10,6 @@
 
 int countword(char *str);
 char getpath(char str);
+int countword(char *str);
 
 #endif
