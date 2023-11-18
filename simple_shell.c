@@ -97,6 +97,9 @@ int main(void)
         }
 	else
 		printf("command not found\n");
-    }}
+    	}
+	free(t);
+    }
+    free(s);
     return (0);
 }
