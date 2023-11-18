@@ -50,14 +50,13 @@ int main(void)
     int read = 0;
     char *s = 0;
     size_t len = 0;
-    char *prompt = "$ ";
     char **t;
     int i = 0;
     int status;
 	/*int exit_code = 0;*/
     while(1)
     {
-        write(1, prompt, 2);
+        write(1, "$ ", 2);
         read = getline(&s, &len, stdin);
 	if (strcmp(s, "env") == 0)
         {
