@@ -50,25 +50,35 @@ int main(void)
     char *s = 0;
     size_t len = 0;
     char *prompt = "$ ";
-    char **t = malloc(100);
-    int status;
-    /*int j = 0;
+    char **t;
     int i = 0;
-    while (environ[i])
-        printf("%s\n", environ[i++]);*/
-
+    int status;
+	/*int exit_code = 0;*/
     while(1)
     {
         write(1, prompt, 2);
         read = getline(&s, &len, stdin);
 	if (s == NULL)
 		continue;
+	else if (strcmp(s, "env") == 0)
+        {
+                while (environ[i])
+                        printf("%s\n", environ[i++]);
+        }
 	else
 	{
         if (read == -1)
             break;
         s[read - 1] = 0;
 	t = argue(s);
+	/*if (strcmp(t[1], "exit") == 0)
+	{
+		if (t[1])
+			exit_code = atoi(t[1]);
+		free (t);
+		free (s);
+		exit(exit_code);
+	}*/
         path = getpath(s);
 	if (path != NULL)
         {
@@ -86,7 +96,7 @@ int main(void)
         	waitpid(child, &status, 0);
         }
 	else
-		printf("command not found");
+		printf("command not found\n");
     }}
     return (0);
 }
