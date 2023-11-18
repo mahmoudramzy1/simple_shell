@@ -30,11 +30,12 @@ char *getpath(char *str)
             strcat(result, "\0");
             if (access(result, X_OK) == 0)
                 return (result);
+	    free(result);
             tokenpath = strtok(NULL, ":");
 
 
         }
-
+	free(cpypath);
 
     }
 
@@ -94,7 +95,8 @@ int main(void)
 		perror("fork error");
 	else
         	waitpid(child, &status, 0);
-        }
+        free(path);
+	}
 	else
 		printf("command not found\n");
     	}
