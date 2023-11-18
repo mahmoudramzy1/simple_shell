@@ -1,11 +1,11 @@
 #include "shell.h"
 
-char getpath(char str);
+char *getpath(char *str)
 {
-	char result;
-	char tokenpath;
-	char cpypath;
-	char p = getenv("PATH");
+	char *result;
+	char *tokenpath;
+	char *cpypath;
+	char *p = getenv("PATH");
 
 	if (access(str, X_OK) == 0)
 		return (str);
@@ -26,6 +26,7 @@ char getpath(char str);
 
 
 		}
+		free(result);
 
 
 	}

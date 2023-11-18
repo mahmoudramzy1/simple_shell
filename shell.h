@@ -9,6 +9,8 @@
 #include <string.h>
 
 int countword(char *str);
-char getpath(char str);
+char *getpath(char *str);
+
+extern char **environ;
 
 #endif
