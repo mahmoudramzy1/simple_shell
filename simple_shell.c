@@ -1,3 +1,5 @@
+#include "shell.h"
+
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
@@ -30,12 +32,12 @@ char *getpath(char *str)
                 return (result);
             tokenpath = strtok(NULL, ":");
 
-            
+
         }
-        
+
 
     }
-    
+
     return (NULL);
 }
 
@@ -48,39 +50,43 @@ int main(void)
     char *s = 0;
     size_t len = 0;
     char *prompt = "$ ";
-    char **t = malloc(sizeof(char) * 16);
+    char **t = malloc(100);
     int status;
-    t[1] = 0;
-    /*int i = 0;
-    while (environ[i]) 
+    /*int j = 0;
+    int i = 0;
+    while (environ[i])
         printf("%s\n", environ[i++]);*/
-    
+
     while(1)
     {
         write(1, prompt, 2);
         read = getline(&s, &len, stdin);
+	if (s == NULL)
+		continue;
+	else
+	{
         if (read == -1)
             break;
         s[read - 1] = 0;
-
+	t = argue(s);
         path = getpath(s);
-        if (path != 0)
+	if (path != NULL)
         {
 
         child = fork();
         if (child == 0)
-            {
-                t[0] = s;
+        {
                 execve(path, t, environ);
-            
+
                 exit(127);
-			}
-        waitpid(child, &status, 0);
-
-                
-
-            
+	}
+	else if (child < 0)
+		perror("fork error");
+	else
+        	waitpid(child, &status, 0);
         }
-    }
-        return(0);   
+	else
+		printf("command not found");
+    }}
+    return (0);
 }
