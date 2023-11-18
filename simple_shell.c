@@ -59,9 +59,7 @@ int main(void)
     {
         write(1, prompt, 2);
         read = getline(&s, &len, stdin);
-	if (s == NULL)
-		continue;
-	else if (strcmp(s, "env") == 0)
+	if (strcmp(s, "env") == 0)
         {
                 while (environ[i])
                         printf("%s\n", environ[i++]);
