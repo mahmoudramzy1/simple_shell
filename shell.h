@@ -11,6 +11,7 @@
 int countword(char *str);
 char *getpath(char *str);
 char **argue(char *n);
+void excuteme(char *path, char **t);
 extern char **environ;
 
 #endif
