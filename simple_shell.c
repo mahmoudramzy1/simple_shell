@@ -18,7 +18,8 @@ int main(void)
 		read = getline(&s, &len, stdin);
 		if (read == -1)
 		{
-			write(1, "\n", 1);
+			if (fd)
+				write(1, "\n", 1);
 			break;
 		}
 		s[read - 1] = 0;
@@ -39,7 +40,8 @@ int main(void)
 			if (path != NULL)
 			{
 				excuteme(path, t);
-				free(path);
+				if (strcmp(s, path) != 0)
+					free(path);
 			}
 			else if (path == NULL)
 			{
@@ -49,6 +51,7 @@ int main(void)
 		}
 
 	}
-	free(s);
+	if (s)
+		free(s);
 	return(0);
 }
