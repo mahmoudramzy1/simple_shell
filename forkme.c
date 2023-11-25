@@ -14,17 +14,14 @@ void excuteme(char *path, char **t)
 	if (child == 0)
 	{
 		execve(path, t, environ);
-		free(path);
 		exit(127);
 	}
 	else if (child < 0)
 	{
 		perror("fork error");
-		free(path);
 	}
 	else
 	{
 		waitpid(child, &status, 0);
-		free(path);
 	}
 }

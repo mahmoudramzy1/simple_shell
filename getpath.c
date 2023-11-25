@@ -18,7 +18,7 @@ char *getpath(char *str)
 	{
 		cpypath = strdup(p);
 		tokenpath = strtok(cpypath, ":");
-		while (tokenpath)
+		while (tokenpath != 0)
 		{
 			result = malloc(strlen(tokenpath) + strlen(str) + 2);
 			strcpy(result, tokenpath);
@@ -33,7 +33,7 @@ char *getpath(char *str)
 			free(result);
 			tokenpath = strtok(NULL, ":");
 		}
+		free(cpypath);
 	}
-	free(cpypath);
 	return (NULL);
 }
