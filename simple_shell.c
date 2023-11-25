@@ -43,7 +43,7 @@ int main(void)
 				if (strcmp(s, path) != 0)
 					free(path);
 			}
-			else if (path == NULL)
+			else if (path == NULL && t[0] != NULL)
 			{
  				printf("command not found\n");
 			}
