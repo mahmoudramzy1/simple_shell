@@ -1,15 +1,17 @@
 #include "shell.h"
 /**
  * main - print the prompt and waait the command from user
+ * @argc: number of arguement
+ * @argv: program name
  * Return: 0
  */
-int main(void)
+int main(int argc, char *argv[])
 {
 	char *path, *s = 0;
-	int read = 0, i = 0;
+	int read = 0, line = 0, exit_num = 0, fd = isatty(STDIN_FILENO);
 	size_t len = 0;
 	char **t;
-	int fd = isatty(STDIN_FILENO);
+	(void)argc;
 
 	while (1)
 	{
@@ -19,23 +21,29 @@ int main(void)
 		if (read == -1)
 		{
 			if (fd)
+			{
 				write(1, "\n", 1);
+				line++;
+			}
 			break;
 		}
 		s[read - 1] = 0;
+		
+		t = argue(s);
+
 		if (strcmp(s, "env") == 0)
-		{
-			while (environ[i])
-			{
-				printf("%s\n", environ[i]);
-				i++;
-			}
-			i = 0;
-		/*	free(s);*/
+                        builtin_env();
+		
+		if (strcmp(s, "exit") == 0)
+		{	
+			exit_num = t[1] ? atoi(t[1]) : exit_num;
+			free(t);
+			free(s);
+			exit(exit_num);
 		}
+		
 		else
 		{
-			t = argue(s);
 			path = getpath(s);
 			if (path != NULL)
 			{
@@ -45,13 +53,14 @@ int main(void)
 			}
 			else if (path == NULL && t[0] != NULL)
 			{
- 				printf("command not found\n");
+ 				fprintf(stderr, "%s: %d: %s: not found\n", argv[0], line, t[0]);
+				exit_num = 127;
 			}
 			free(t);
 		}
 
 	}
-	if (s)
+
 		free(s);
-	return(0);
+	exit(exit_num);
 }
