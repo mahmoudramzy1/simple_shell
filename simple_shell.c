@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
 
 	while (1)
 	{
+		line++;
 		if (fd)
 			write(1, "$ ", 2);
 		read = getline(&s, &len, stdin);
@@ -23,7 +24,6 @@ int main(int argc, char *argv[])
 			if (fd)
 			{
 				write(1, "\n", 1);
-				line++;
 			}
 			break;
 		}
